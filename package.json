@@ -1,17 +1,20 @@
 {
-    "name": "linux-fivem-downloader",
+    "name": "windows-fivem-downloader",
     "version": "1.0.0",
     "description": "",
     "main": "download.js",
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "node download.js"
+        "start": "start.bat",
+        "download": "node bin/download-artifacts.js",
+        "install-cfx": "node bin/download-cfx-server-data.js && node bin/download-cfg.js"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
-      "axios": "^0.27.2",
-      "cheerio": "^1.0.0-rc.12"
+        "7zip-bin": "^5.2.0",
+        "axios": "^0.27.2",
+        "cheerio": "^1.0.0-rc.12",
+        "decompress": "^4.2.1",
+        "node-7z": "^3.0.0"
     }
-  }
-  
+}

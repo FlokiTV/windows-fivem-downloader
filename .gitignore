@@ -1,0 +1,7 @@
+resources/*
+node_modules/*
+cache/*
+artifacts/*
+start.bat
+server.cfg
+*lock.*
