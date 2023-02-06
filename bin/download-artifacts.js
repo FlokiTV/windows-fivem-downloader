@@ -10,7 +10,7 @@ let URL = "https://runtime.fivem.net/artifacts/fivem/build_server_windows/master
 axios.get(URL)
   .then(response => {
     const $ = cheerio.load(response.data)
-    let u = URL + $("a").attr("href").replace("./", "")
+    let u = URL + $("a.is-active").attr("href").replace("./", "")
     download(u, () => {
       extract('server.7z', () => {
         delFile('server.7z', () => {
