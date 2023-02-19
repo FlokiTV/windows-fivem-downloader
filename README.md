@@ -15,6 +15,11 @@ npm run download
 npm run install-cfx
 ```
 
+### download default server.cfg
+```
+npm run download-cfg
+```
+
 ## start server
 ```
 npm start

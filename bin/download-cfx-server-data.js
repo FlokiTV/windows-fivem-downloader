@@ -5,22 +5,6 @@ const fs = require("fs");
 const url =
   "https://codeload.github.com/citizenfx/cfx-server-data/zip/refs/heads/master";
 
-const delFile = (file, cb) => {
-  const ls = spawn("rm", ["-r", file]);
-  ls.stdout.on("data", (data) => {
-    console.log(`stdout: ${data}`);
-  });
-
-  ls.stderr.on("data", (data) => {
-    console.error(`stderr: ${data}`);
-  });
-
-  ls.on("close", (code) => {
-    console.log(`child process exited with code ${code}`);
-    cb(0);
-  });
-};
-
 const extract = (file, cb) => {
   decompress(file, ".")
     .then((files) => {
@@ -53,19 +37,17 @@ const download = (u, cb) => {
 
 download(url, () => {
   extract("./data.zip", () => {
-    delFile("data.zip", () => {
-      console.log("Extract done");
-    });
+    fs.unlinkSync('./data.zip');
+    console.log("Extract done");
     fs.cp(
       "./cfx-server-data-master/resources",
-      "./resources",
+      "./resources/[cfx]",
       { recursive: true },
       (err) => {
         if (err) console.error(err);
         else
-          delFile("cfx-server-data-master", () => {
-            console.log("DONE");
-          });
+          fs.rmSync("cfx-server-data-master", { recursive: true, force: true });
+        console.log("DONE");
       }
     );
   });

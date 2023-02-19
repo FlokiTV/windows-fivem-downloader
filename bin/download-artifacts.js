@@ -1,7 +1,7 @@
 const cheerio = require('cheerio');
 const axios = require('axios');
 const { spawn } = require('child_process');
-
+const fs = require('fs');
 const sevenBin = require('7zip-bin')
 const { extractFull } = require('node-7z')
 const pathTo7zip = sevenBin.path7za
@@ -13,28 +13,11 @@ axios.get(URL)
     let u = URL + $("a.is-active").attr("href").replace("./", "")
     download(u, () => {
       extract('server.7z', () => {
-        delFile('server.7z', () => {
-          console.log("DONE")
-        })
+        fs.unlinkSync('./server.7z');
+        console.log("DONE")
       })
     })
   })
-
-const delFile = (file, cb) => {
-  const ls = spawn('rm', ['-r', file]);
-  ls.stdout.on('data', (data) => {
-    console.log(`stdout: ${data}`);
-  });
-
-  ls.stderr.on('data', (data) => {
-    console.error(`stderr: ${data}`);
-  });
-
-  ls.on('close', (code) => {
-    console.log(`child process exited with code ${code}`);
-    cb(0)
-  });
-}
 
 const extract = (file, cb) => {
   const seven = extractFull(file, './artifacts/', {
